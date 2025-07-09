@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}Participants{% endblock  %}
+{% block sidebar %}{% endblock sidebar %}
+
+{% block content %}
+<h2 class="text-2xl font-bold mb-4">Participants</h2>
+
+
+<a href="{% url 'participant_create' %}" class="bg-green-600 text-white px-4 py-2 rounded mb-4 inline-block">Add Participant</a>
+
+
+<div class="mb-20">
+    <table class="w-full table-auto border-collapse">
+        <thead>
+            <tr class="bg-gray-200">
+                <th class="px-4 py-2 border">Name</th>
+                <th class="px-4 py-2 border">Category</th>
+                <th class="px-4 py-2 border">Participants</th>
+                <th class="px-4 py-2 border">Date</th>
+                <th class="px-4 py-2 border">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for participant in participants %}
+            <tr>
+                <td class="border px-4 py-2">
+                    {{ participant.name }}
+                </td>
+
+                <td class="border px-4 py-2">
+                    {% for event in participant.events.all %}
+                        {{ event.category.name}}{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </td>
+
+
+                <td class="border px-4 py-2">{{ event.category.name }}</td>
+                <td class="border px-4 py-2">{{ event.participants.count }}</td>
+                <td class="border px-4 py-2">{{ event.date }}</td>
+                <td class="border px-4 py-2 space-x-2">
+                    <a href="{% url 'participant_update' participant.pk %}" class="text-yellow-600 hover:underline">Edit</a>
+                    <a href="{% url 'participant_delete' participant.pk %}" class="text-Red-600 hover:underline">Delete</a>                
+                </td>
+            </tr>
+
+            {% empty %}
+            <tr><td colspan="5" class="text-center py-4">No Events Found.</td></tr>
+            {% endfor %}
+
+        </tbody>
+    </table>
+</div>
+
+{% endblock  %}

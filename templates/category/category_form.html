@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Category Form{% endblock  %}
+{% block sidebar %}{% endblock sidebar %}
+
+{% block content %}
+
+<div class="p-8 mt-8 max-w-lg mx-auto">
+    <div class="w-full mx-w-md p-8 bg-gray-300 rounded-lg shadow-md">
+        <h2 class="text-2xl font-bold mb-4 text-center">Category Form</h2>
+
+
+        <form method="post" class="space-y-4 justify center">
+        {% csrf_token %}
+        {{ form.as_p}}    
+
+            <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded">Save</button>
+            <a href="{% url 'category_list' %}" class="text-blue-600 hover:underline ml-4">Cancel</a>
+        </form>
+    </div>
+</div>
+
+{% endblock  %}
+

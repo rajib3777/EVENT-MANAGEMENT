@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Participant Form{% endblock  %}
+{% block sidebar %}{% endblock sidebar %}
+{% block content %}
+<h2 class="text-2xl font-bold mb-4">Participant Form</h2>
+
+
+<div class="mb-12 justify-center border-shadow-gray">
+    <form method="post" class="space-y-4">
+        {% csrf_token %}
+        {{ form.as_p}}
+
+        <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded">Save</button>
+        <a href="{% url 'participant_list' %}" class="text-blue-600 hover:underline ml-4">Cancel</a>
+    </form>
+
+
+</div>
+{% endblock  %}

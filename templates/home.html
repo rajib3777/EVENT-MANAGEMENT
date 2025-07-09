@@ -1,0 +1,43 @@
+
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+{% comment "hero" %}{% endcomment %}
+<section class="relative bg-cover bg-center h-screen flex items-center justify-center" 
+    style="background-image: url('{% static 'images/hero.jpg' %}'); background-size:cover;background-position:center;">
+    <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+    
+    <div class="relative z-10 text-center text-white px-4">
+        <h2 class="text-5xl md:text--7xl font-bold mb-4">Welcome to Hermoni</h2>
+        <p class="text-xl md:text-2xl ">Your Best Event Experience</p>
+    </div>
+</section>
+
+
+
+{% comment "events_section" %}{% endcomment %}
+
+<section class="events-section py-12">
+    <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold mb-6">Upcoming Events</h2>
+        <div class="grid md:grid-cols-3 gap-8">
+            {% for event in upcoming_events %}
+            <div class="bg-white rounded shadow p-6">
+                <h3 class="text-xl font-semibold">{{ event.name }}</h3>
+                <p class="text-gray-600">{{ event.date }} at {{ event.location}} </p>
+                <p class="text-gray-500">{{ event.category.name }}</p>
+                <a href="{% url 'event_detail' event.pk %}" class="text-indigo-600 hover:underline">Details</a>
+            </div>
+
+            {% empty %}
+
+            <p> NO Upcoming events found </p>
+            
+            {% endfor %}
+        </div>    
+    </div>
+</section>
+
+
+{% endblock  %}

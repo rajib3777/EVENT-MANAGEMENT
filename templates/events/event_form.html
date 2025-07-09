@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block title %}Event Form{% endblock  %}
+{% block sidebar %}{% endblock sidebar %}
+{% block content %}
+<div class="max-w-2xl mx-auto mb-20">
+    <h2 class="text-2xl font-bold mb-6">Event Form</h2>
+
+    <form method="post" enctype="multipart/form-data" class="space-y-4">
+        
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label for="{{ form.name.id_for_label }}" class="text=sm font-medium text-gray-700">Event Name</label>
+
+            {{ form.name }}
+
+            {% if form.name.errors %}
+                <p class="mt-1 text-sm text-red-600">{{form.name.errors}}</p>
+            {% endif %}
+
+        </div>
+
+        {% comment "category" %}{% endcomment %}
+        <div class="form-group">
+            <label for="{{ form.category.id_for_label }}" class="block text-sm font-medium text-gray-700">Category</label>
+            <select name="{{ form.category.name }}" id="{{form.category.id_for_label}}" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                
+                <option value="">--------</option>
+                {% for choice in form.category.field.queryset %}
+                    <option value="{{ choice.pk }}" {% if form.category.value == choice.pk  %}selected{% endif %}>{{ choice.name }}</option>
+                {% endfor %}
+            </select>
+{% comment "queryset hote pare" %}{% endcomment %}
+            {% if form.category.errors %}
+                <p class="mt-1 text-sm text-red-600">{{ form.category.errors.0 }}</p>
+            {% endif %}
+        </div>
+
+
+
+        {{ form.as_p }}
+
+        <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded">Save</button>
+        <a href="{% url 'event_list' %}" class="text-blue-600 hover:underline ml-4">Cancel</a>
+    </form>
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<script>
+$(document).ready(function(){
+    $('#{{ form.participants.id_for_label }}').select2({
+        placeholder : "Select Participants",
+        allowClear: true
+    });
+    
+
+    $('#{{ form.category.id_for_label }}').select2({
+        placeholder : "Select a category",
+        allowClear: true
+    });
+
+});
+</script>
+
+{% endblock  %}
