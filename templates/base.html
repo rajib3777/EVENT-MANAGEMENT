@@ -25,30 +25,30 @@
                 <h1 class="text-3xl font-bold text-center absolute left-1/2 transform -translate-x-1/2 text-white">HERMONI</h1>
             </div>
             <div class="flex items-center">
-                <ul class="flex flex-row font-medium mt-3 space-x-6 rtl:space-x-reverse text-sm">
-                    <li>
+                <ul class="flex flex-row flex-wrap font-medium mt-3 space-x-6 rtl:space-x-reverse text-s">
+                    <li class="relative group">
                         <a href="{% url 'home' %}" class="text-white hover:underline">Home</a>
                     </li>
-                    <li>
+                    <li class="relative group">
                         <a href="{% url 'event_list' %}" class="hover:underline text-white">Events</a>
                         <div class="absolute hidden group-hover:block bg-white text-black mt-2 rounded shadow min-w-[150px]">
                             <a href="{% url 'event_create' %}" class="block px-4 py-2 hover:bg-gray-200">Create Event</a>
                             <a href="{% url 'dashboard' %}" class="block px-4 py-2 hover:bg-gray-200">Dashboard</a>
                         </div>
                     </li>
-                    <li>
+                    <li class="relative group">
                         <a href="{% url 'participant_list' %}" class="hover:underline text-white">Participants</a>
                         <div class="absolute hidden group-hover:block bg-white text-black mt-2 rounded shadow min-w-[150px]">
                             <a href="{% url 'participant_create' %}" class="block px-4 py-2 hover:bg-gray-200">Add Participant</a>
                         </div>
                     </li>
-                    <li>
+                    <li class="relative group">
                         <a href="{% url 'category_list' %}" class="hover:underline text-white">Category</a>
                         <div class="absolute hidden group-hover:block bg-white text-black mt-2 rounded shadow min-w-[150px]">
                             <a href="{% url 'category_create' %}" class="block px-4 py-2 hover:bg-gray-200">Add Category</a>
                         </div>
                     </li>
-                    <li>
+                    <li class="relative group">
                         <a href="{% url 'dashboard' %}" class="hover:underline text-white">Dashboard</a>
                         <div class="absolute hidden group-hover:block bg-white text-black mt-2 rounded shadow min-w-[150px]">
                             <a href="{% url 'dashboard' %}" class="block px-4 py-2 hover:bg-gray-200">View States</a>
