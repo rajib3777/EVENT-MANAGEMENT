@@ -2,10 +2,42 @@
 {% block title %}Participant Form{% endblock  %}
 {% block sidebar %}{% endblock sidebar %}
 {% block content %}
-<h2 class="text-2xl font-bold mb-4">Participant Form</h2>
 
 
-<div class="mb-12 justify-center border-shadow-gray">
+
+<style>
+  form p{
+    margin-bottom:1rem;
+  }
+  form p input,
+  form p textarea,
+  form p select{
+    width: 100%;
+    padding: 0.5rem;
+    border:1px solid #ccc;
+    border-radius: 0.375rem:
+ }
+</style>
+
+
+<div class="p-4 sm:p-6 md:p-8 mt-8 max-w-md mx-auto">
+    <div class="w-full max-w-md p-8 bg-gray-300 rounded-lg shadow-md">
+        <h2 class="text-2xl font-bold mb-4 text-center">Participants Form</h2>
+
+
+        <form method="post" class="space-y-4">
+            {% csrf_token %}
+            {{ form.as_p}}    
+
+            <div class="flex items-center space-x-4">
+                <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded">Save</button>
+                <a href="{% url 'participant_list' %}" class="text-blue-600 hover:underline ml-4">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% comment %} <div class="mb-12 justify-center border-shadow-gray">
     <form method="post" class="space-y-4">
         {% csrf_token %}
         {{ form.as_p}}
@@ -15,5 +47,5 @@
     </form>
 
 
-</div>
+</div> {% endcomment %}
 {% endblock  %}
