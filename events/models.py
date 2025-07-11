@@ -1,14 +1,17 @@
 from django.db import models
 from django.utils import timezone
 from django.utils.text import slugify
+from cloudinary.models import CloudinaryField
+
+
       
 # Create your models here.
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True)
-    icon = models.ImageField(
-    upload_to='category_icons/',
+    icon = CloudinaryField(
+    'image',
     blank=True,
     null=True
     )
@@ -51,8 +54,8 @@ class Event(models.Model):
         default='draft'
     )
     
-    thumbnail = models.ImageField(
-        upload_to='event_thumbnails/',
+    thumbnail = CloudinaryField(
+        'image',
         blank=True,
         null=True
     )
