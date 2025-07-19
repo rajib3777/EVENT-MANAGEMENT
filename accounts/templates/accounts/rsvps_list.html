@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}My RSVPS Events{% endblock title %}
+
+{% block content %}
+<div class="container mx-auto px-4 mb-4">
+    <h1 class="text-2xl font-bold mb-4">MY RSVP EVENTS</h1>
+
+    {% if events %}
+        <table class="min-w-full bg-white border border-gray-200">
+            <thead>
+                <tr>
+                    <th class="py-2 px-4 border-b">Event Title</th>
+                    <th class="py-2 px-4 border-b">Date</th>
+                    <th class="py-2 px-4 border-b">Created At</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for event in events %}
+                <tr class="text-center">
+                    <td class="py-2 px-4 border-b">{{ event.title }}</td>
+                    <td class="py-2 px-4 border-b">{{ event.date }}</td>
+                    <td class="py-2 px-4 border-b">{{ event.created_at|date:"Y-m-d" }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p class="text-gray-500">YOU HAVE NOT RSVPed TO ANY EVENTS YET.</p>
+    {% endif %}
+</div>
+{% endblock %}
+

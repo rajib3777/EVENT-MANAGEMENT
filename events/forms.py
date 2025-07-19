@@ -1,5 +1,5 @@
 from django import forms
-from .models import Event,Participant,Category
+from .models import Event,Category #,Participant
 from django.forms import DateTimeInput,DateInput,TimeInput
 
 
@@ -14,7 +14,7 @@ class EventForm(forms.ModelForm):
             'time' : TimeInput(attrs={'type' : 'time','class':'form-control'}),
             'description' : forms.Textarea(attrs={'rows' : 4,'class':'form-control'}),
             'category' : forms.Select(attrs={'rows':'form-select'}),
-            'participants' : forms.SelectMultiple(attrs={'class':'form-select'}),
+            #'participants' : forms.SelectMultiple(attrs={'class':'form-select'}),
             'status': forms.Select(attrs={'class': 'form-control'}),
             
         }
@@ -22,19 +22,19 @@ class EventForm(forms.ModelForm):
     def __init__(self,*args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['category'].queryset = Category.objects.all()
-        self.fields['participants'].queryset = Participant.objects.all() 
+        # self.fields['participants'].queryset = Participant.objects.all() 
         
-        self.fields['participants'].widget.attrs.update({'class':'form-control'})
+        # self.fields['participants'].widget.attrs.update({'class':'form-control'})
         
-class ParticipantForm(forms.ModelForm):
-    class Meta:
-        model = Participant
-        fields = '__all__'
-        widgets = {
-            'name': forms.TextInput(attrs={'class':'form-control'}),
-            'email' : forms.EmailInput(attrs={'class':'form-control'}),
-            'phone' : forms.TextInput(attrs={'class':'form-control'}),
-        }
+# class ParticipantForm(forms.ModelForm):
+#     class Meta:
+#         model = Participant
+#         fields = '__all__'
+#         widgets = {
+#             'name': forms.TextInput(attrs={'class':'form-control'}),
+#             'email' : forms.EmailInput(attrs={'class':'form-control'}),
+#             'phone' : forms.TextInput(attrs={'class':'form-control'}),
+#         }
         
         
         
@@ -49,4 +49,10 @@ class CategoryForm(forms.ModelForm):
             'icon' : forms.ClearableFileInput(attrs={'class':'form-control'})
         }
         
-        
+# events/forms.py
+
+class StyledFormMixin:
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs['class'] = 'form-input form-bordered w-full rounded'

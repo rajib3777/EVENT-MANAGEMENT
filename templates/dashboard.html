@@ -5,6 +5,7 @@
 
 {% block content %}
 
+
 <div id="default-carousel" class="relative w-full md:px-20 pt-10" data-carousel="slide">
     <!-- Carousel wrapper -->
     <div class="relative h-[400px]  overflow-hidden rounded-lg md:h-[550px]">
@@ -66,10 +67,10 @@
                 <p class="text-2xl">{{ total_events }}</p>
             </div>
 
-            <div class="bg-white p-4 rounded shadow">
+            {% comment %} <div class="bg-white p-4 rounded shadow">
                 <h3 class="text-xl font-semibold">Total Participants</h3>
                 <p class="text-2xl">{{ total_participants }}</p>
-            </div>
+            </div> {% endcomment %}
 
 
             <div class="bg-white p-4 rounded shadow">
@@ -112,3 +113,4 @@
 <script src="https://unpkg.com/flowbite@1.6.5/dist/flowbite.min.js"></script>  
 {% endblock  %}
 
+group

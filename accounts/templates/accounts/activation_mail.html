@@ -1,0 +1,27 @@
+{% autoescape off %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Active your Account</title>
+</head>
+
+
+<body>
+    <h2> Hello {{ user.username }},</h2>
+
+
+    <p>Thank you for registering with us.</p>
+
+    <p>
+        <a href="{{ activation_link }}">{{ activation_link }}</a>
+    </p>
+
+    <p>If you did not registered,you can ignore this mail</p>
+
+    <p>Best regards,<br>HERMONI</p>
+</body>
+
+</html>
+
+{% endautoescape %}

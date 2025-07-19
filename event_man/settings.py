@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'events',
     'cloudinary',
-    'cloudinary_storage'
+    'cloudinary_storage',
+    'accounts'
 ]
 
 CLOUDINARY_STORAGE = {
@@ -134,6 +135,15 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+#my made-settings
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'rajibulislam3777@gmail.com'
+EMAIL_HOST_PASSWORD = 'tpbc mpfr ugnp kyyb'
+EMAIL_PORT = 587
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
@@ -161,6 +171,12 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+#my made
+
+LOGIN_URL = '/accounts/sign-in/'
+
 #my set settings
 MEDIA_URL = '/event_thumbnails/'
 MEDIA_ROOT = BASE_DIR
+
+

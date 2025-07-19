@@ -2,7 +2,7 @@ from django.db import models
 from django.utils import timezone
 from django.utils.text import slugify
 from cloudinary.models import CloudinaryField
-
+from django.contrib.auth.models import User
 
       
 # Create your models here.
@@ -27,7 +27,7 @@ class Event(models.Model):
         ('published','Published'),
         ('canceled','Canceled'),
     ]
-    
+    # participants
     name = models.CharField(max_length=100)
     slug = models.SlugField(unique=True)
     description = models.TextField()
@@ -35,6 +35,9 @@ class Event(models.Model):
     date = models.DateField()
     time = models.TimeField()
     location = models.CharField(max_length=200)
+    
+    
+    rsvps = models.ManyToManyField(User, related_name='event_rsvps', blank=True)
     
     max_seats = models.PositiveBigIntegerField(default=0)
     
@@ -46,7 +49,8 @@ class Event(models.Model):
         null=True,
         blank=True
     )
-    participants = models.ManyToManyField('Participant',blank=True)
+    
+    # participants = models.ManyToManyField('Participant',blank=True)
     
     status = models.CharField(
         max_length=20,
@@ -78,12 +82,6 @@ class Event(models.Model):
         return self.name 
     
     
-class Participant(models.Model):
-    name = models.CharField(max_length=100)
-    email = models.EmailField(unique=True)
-    phone = models.CharField(max_length=15,blank=True)
-    
-    def __str__(self):
-        return self.name
+
 
 

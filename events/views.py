@@ -1,16 +1,23 @@
 from django.shortcuts import render,get_object_or_404,redirect
 from django.utils import timezone
-from .models import Event,Participant,Category
-from .forms import EventForm,ParticipantForm,CategoryForm
+from .models import Event,Category#Participant
+from .forms import EventForm,CategoryForm #ParticipantForm
 from django.utils.text import slugify
 from django.db.models import Sum
+from django.contrib.auth.models import User
+from django.core.exceptions import PermissionDenied
+from django.contrib.auth.decorators import login_required
+
 
 
 
 
 #---- Homepage ----#
 
+@login_required(login_url='sign-in')
 def home(request):
+    if not request.user.is_authenticated:
+        return redirect('sign-up')
     today = timezone.now().date()
     previous_events = Event.objects.filter(date__lt=today).select_related('category')
     todays_events = Event.objects.filter(date=today).select_related('category')
@@ -30,12 +37,12 @@ def home(request):
 
 def dashboard(request):
     today = timezone.now().date()
-    total_participants = Participant.objects.count()
+    #total_participants = Participant.objects.count()
     total_events = Event.objects.count()
     previous_events = Event.objects.filter(date__lt=today).select_related('category')
     todays_events = Event.objects.filter(date=today).select_related('category')
     upcoming_events =  Event.objects.filter(date__gt=today).select_related('category')
-    total_participants = Participant.objects.count()
+    total_participants =  User.objects.filter(groups__name='Participant').count()
     
 
 
@@ -53,13 +60,13 @@ def dashboard(request):
 
 def event_detail(request,pk):
     event = get_object_or_404(
-        Event.objects.select_related('category').prefetch_related('participants'),
+        Event.objects.select_related('category').prefetch_related('rsvps'),
         pk=pk
     )
     
     return render(request,'events/event_detail.html',{'event' : event})
 
-    
+
 #---- Event_crud ----#
 def event_list(request):
     query = request.GET.get('q')
@@ -94,14 +101,18 @@ def event_list(request):
     
     return render(request,'events/event_list.html',context)
     
-
+@login_required
 def event_create(request):
+    if not (request.user.is_superuser or request.user.groups.filter(name='Organizer').exists()):
+        raise PermissionDenied("Only Organizers and admins can create events")
+    
     if request.method == 'POST':
         form = EventForm(request.POST,request.FILES)
         if form.is_valid():
             event = form.save(commit=False)
             event.slug = slugify(event.name)
             event.status = 'published'
+            event.organizer = request.user
             event.save()
             form.save_m2m()
             return redirect('event_list')
@@ -135,7 +146,7 @@ def event_delete(request,pk):
         
     return render(request,'events/event_confirm_delete.html',{'event':event})
 
-
+User.objects.filter
 
 #---- category crud ----#
 
@@ -183,48 +194,48 @@ def category_delete(request,pk):
 
 #---- participant crud ----#
 
-def participant_list(request):
-    participant = Participant.objects.all()
-    return render(request,'participants/participant_list.html',{'participants' : participant})
+# def participant_list(request):
+#     participant = Participant.objects.all()
+#     return render(request,'participants/participant_list.html',{'participants' : participant})
 
 
 
-def participant_create(request):
-    if request.method == 'POST':
-        form = ParticipantForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('participant_list')
+# def participant_create(request):
+#     if request.method == 'POST':
+#         form = ParticipantForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('participant_list')
         
         
-    else:
-        form = ParticipantForm()
+#     else:
+#         form = ParticipantForm()
         
-    return render(request,'participants/participant_form.html',{'form':form})
+#     return render(request,'participants/participant_form.html',{'form':form})
 
-def participant_update(request,pk):
-    participant = get_object_or_404(Participant,pk=pk)
-    if request.method == 'POST':
-        form = ParticipantForm(request.POST,request.FILES,instance=participant)
-        if form.is_valid():
-            form.save()
-            return redirect('participant_list')
+# def participant_update(request,pk):
+#     participant = get_object_or_404(Participant,pk=pk)
+#     if request.method == 'POST':
+#         form = ParticipantForm(request.POST,request.FILES,instance=participant)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('participant_list')
         
         
-    else:
-        form = ParticipantForm(instance=participant)
+#     else:
+#         form = ParticipantForm(instance=participant)
         
-    return render(request,'participants/participant_form.html',{'form':form})
+#     return render(request,'participants/participant_form.html',{'form':form})
 
 
     
-def participant_delete(request,pk):
-    participant = get_object_or_404(Participant,pk=pk)
-    if request.method == 'POST':
-        participant.delete()
-        return redirect('participant_list')
+# def participant_delete(request,pk):
+#     participant = get_object_or_404(Participant,pk=pk)
+#     if request.method == 'POST':
+#         participant.delete()
+#         return redirect('participant_list')
         
-    return render(request,'participants/participant_delete.html',{'participant':participant})
+#     return render(request,'participants/participant_delete.html',{'participant':participant})
 
 def about_view(request):
     return render(request, 'about.html')
