@@ -90,20 +90,20 @@ WSGI_APPLICATION = 'event_man.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
-
 DATABASES = {
-    'default': dj_database_url.config(
-        default='postgresql://manage_event_db_user:m52JRDC7887boOOZ6v1aFALhxQ0fLxrV@dpg-d1nc8k6mcj7s73dlp88g-a.oregon-postgres.render.com/manage_event_db',
-        conn_max_age=600
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
 }
+
+
+# DATABASES = {
+#     'default': dj_database_url.config(
+#         default='postgresql://manage_event_db_user:m52JRDC7887boOOZ6v1aFALhxQ0fLxrV@dpg-d1nc8k6mcj7s73dlp88g-a.oregon-postgres.render.com/manage_event_db',
+#         conn_max_age=600
+#     )
+# }
 
 # DATABASES = {
 #     'default': {
