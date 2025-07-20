@@ -7,7 +7,7 @@ from django.shortcuts import redirect
 #     return redirect('sign-up')
 
 urlpatterns = [
-    #path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls),
     # path('', sign_up, name='root-sign-up'),
     path('accounts/', include('accounts.urls')),
     path('',include('events.urls')),
