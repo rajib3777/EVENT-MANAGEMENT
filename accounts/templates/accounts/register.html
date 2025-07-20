@@ -54,7 +54,7 @@
                                     <label for="{{ field.id_for_label }}" class="block mb-2 text-sm text-gray-600 dark:text-gray-200">{{ field.label }}</label>
                                     {{ field.as_widget|safe }}
                                     {% if field.errors %}
-                                        <ul class="text-sm text-red-600 mt-1">
+                                        <ul class="text-sm text-white mt-1">
                                             {% for error in field.errors %}
                                                 <li class="{{ error }}"></li>
                                             {% endfor %}
