@@ -175,4 +175,3 @@ def rsvp_list(request):
     return render(request,'accounts/rsvp_list.html',{'events':events})
 
 
-admin_dashboard
