@@ -28,8 +28,16 @@ from events.models import Event
 def sign_up(request):
     form = CustomRegistrationForm()
     if request.method == 'POST':
+        print("📥 Received POST request for signup")
         form = CustomRegistrationForm(request.POST)
+        print("✅ Form validity:", form.is_valid())
         if form.is_valid():
+            try:
+                email.send()
+                print("✅ Email sent")
+            except Exception as e:
+                print("❌ Email error:", e)
+                
             user = form.save(commit=False)
             user.set_password(form.cleaned_data.get('password1'))
             user.is_active = False   
@@ -70,6 +78,9 @@ def sign_up(request):
             email = EmailMultiAlternatives(subject,'',to=[user.email])
             email.attach_alternative(message,'text/html')
             email.send()
+            email.send()
+            print("✅ Activation email sent to:", user.email)
+
                         
             messages.success(
                 request, 'A Confirmation mail sent. Please check your email')
@@ -77,6 +88,9 @@ def sign_up(request):
 
         else:
             print("Form is not valid")
+           
+            print("❌ Form invalid:", form.errors)
+
     return render(request, 'accounts/register.html', {"form": form})
 
 

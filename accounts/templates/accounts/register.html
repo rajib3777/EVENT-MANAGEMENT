@@ -28,26 +28,40 @@
                     
                     
                     {% if form.non_field_errors %}
-                    <ul class="mt-4 text-red-600">
+                    <ul class="mt-4 text-white">
                         {% for errors in form.non_field_errors %}
                             <li>{{ error }}</li>
                         {% endfor %}
                     </ul>
                     {% endif %}
 
-                    {% if form.role %}
-                    <ul class="mt-4 text-red-600">
-                        <div class="mt-6">
-                            <h1 class="text-gray-500 dark:text-gray-300">Select type of Account</h1>
-                            <div class="mt-3">
-                                {{ form.role }}
-                            </div>
-                        </div>
-                    </ul>
-                    {% endif %}
-
                     <form method="POST" class="grid grid-cols-1 gap-6 mt-8 md:grid-cols-2">
                         {% csrf_token %}
+
+                        <div class="md:col-span-2 mt-2">
+                            <label for="{{ form.role.id_for_label }}" class="block-mb-2 text-sm text-gray-600 dark:text-gray-200">Select Your Account Type</label>
+                            {{ form.role }}
+                            {% if form.role.errors %}
+                                <ul class="text-sm text-white">
+                                    {% for error in form.role.errors %}
+                                        <li>{{ error }}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        </div>
+
+                        {% comment %} {% if form.role %}
+                            <ul class="mt-4 text-red-600">
+                                <div class="mt-6">
+                                    <h1 class="text-gray-500 dark:text-gray-300">Select type of Account</h1>
+                                    <div class="mt-3">
+                                        {{ form.role }}
+                                    </div>
+                                </div>
+                            </ul>
+                        {% endif %} {% endcomment %}
+
+
                         {% for field in form %}
                             {% if field.name != "role" %}
                                 <div>
