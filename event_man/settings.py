@@ -99,22 +99,22 @@ WSGI_APPLICATION = 'event_man.wsgi.application'
 # }
 
 
-DATABASES = {
-    'default': dj_database_url.config(
-        default='postgresql://event_db_acua_user:XSZTgoJZMsUev8PlSuY3NJ6NA0fzug4B@dpg-d1u29fc9c44c73cift30-a.oregon-postgres.render.com/event_db_acua',
-        conn_max_age=600
-    )
-}
-
 # DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'event_db',
-#         'USER': 'postgres',
-#         'PASSWORD': '11001',
-#         'HOST': 'localhost',
-#         'PORT': '5432',
-#     }}
+#     'default': dj_database_url.config(
+#         default='postgresql://event_db_acua_user:XSZTgoJZMsUev8PlSuY3NJ6NA0fzug4B@dpg-d1u29fc9c44c73cift30-a.oregon-postgres.render.com/event_db_acua',
+#         conn_max_age=600
+#     )
+# }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'event_db',
+        'USER': 'postgres',
+        'PASSWORD': '11001',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }}
 
 
 # Password validation
@@ -178,5 +178,8 @@ LOGIN_URL = '/accounts/sign-in/'
 #my set settings
 MEDIA_URL = '/event_thumbnails/'
 MEDIA_ROOT = BASE_DIR
+
+
+AUTH_USER_MODEL = 'accounts.Customuser'
 
 

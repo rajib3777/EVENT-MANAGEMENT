@@ -4,13 +4,13 @@ from .models import Event,Category#Participant
 from .forms import EventForm,CategoryForm #ParticipantForm
 from django.utils.text import slugify
 from django.db.models import Sum
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.core.exceptions import PermissionDenied
 from django.contrib.auth.decorators import login_required
 
 
 
-
+User = get_user_model()
 
 #---- Homepage ----#
 
@@ -146,7 +146,7 @@ def event_delete(request,pk):
         
     return render(request,'events/event_confirm_delete.html',{'event':event})
 
-User.objects.filter
+
 
 #---- category crud ----#
 

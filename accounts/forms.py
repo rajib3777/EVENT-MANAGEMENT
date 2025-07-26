@@ -5,6 +5,7 @@ from .models import Customuser
 from events.forms import StyledFormMixin
 from django.contrib.auth import get_user_model
 
+User = get_user_model()
 class CustomRegistrationForm(StyledFormMixin, forms.ModelForm):
     ROLE_CHOICES = [
         ('Participant','Participant'),
