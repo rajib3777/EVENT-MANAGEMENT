@@ -16,12 +16,7 @@ urlpatterns = [
     path('events/<int:pk>/update/',views.event_update,name='event_update'),
     path('events/<int:pk>/delete/',views.event_delete,name='event_delete'),
     
-    
-    # #participant-crud
-    # path('participants/',views.participant_list,name='participant_list'),
-    # path('participants/create/',views.participant_create,name='participant_create'),
-    # path('participants/<int:pk>/update/',views.participant_update,name='participant_update'),
-    # path('participants/<int:pk>/delete/',views.participant_delete,name='participant_delete'),
+
     
     # categories
     
