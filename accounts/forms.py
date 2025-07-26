@@ -1,9 +1,9 @@
 from django import forms
 import re
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
+from .models import Customuser
 from events.forms import StyledFormMixin
-
+from django.contrib.auth import get_user_model
 
 class CustomRegistrationForm(StyledFormMixin, forms.ModelForm):
     ROLE_CHOICES = [
@@ -21,14 +21,14 @@ class CustomRegistrationForm(StyledFormMixin, forms.ModelForm):
     password1 = forms.CharField(widget=forms.PasswordInput)
     confirm_password = forms.CharField(widget=forms.PasswordInput)
     class Meta:
-        model = User
+        model = Customuser
         fields = ['username', 'first_name', 'last_name',
-                  'email','role','security_pass',
+                  'email','role','mobile_number','profile_picture','security_pass',
                   'password1', 'confirm_password',]
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
-        email_exists = User.objects.filter(email=email).exists()
+        email_exists = User.objects.filter(email=email,is_active=True).exists()
 
         if email_exists:
             raise forms.ValidationError("Email already exists")
@@ -82,9 +82,17 @@ class CustomRegistrationForm(StyledFormMixin, forms.ModelForm):
         super().__init__(*args, **kwargs)
         for field in self.fields.values():
             field.widget.attrs.update({
-                'class': 'block w-full px-4 py-2 mt-2 text-black bg-white border border-black rounded-md focus:border-blue-500 focus:outline-none focus_ring'
+                'class': 'block w-full px-4 py-2 mt-2 text-black bg-white border border-black rounded-md focus:border-blue-500 focus:outline-none focus:ring'
             })
-    
-    
-    
-    
+class Profileupdateform(forms.ModelForm):
+    class Meta:
+        model = Customuser
+        fields = ['first_name','last_name','email','mobile_number','profile_picture']
+        
+    def __init__(self,*args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs.update({
+                'class': 'block w-full px-4 py-2 mt-2 text-black bg-white border border-black rounded-md focus:border-blue-500 focus:outline-none focus:ring'
+            })
+
